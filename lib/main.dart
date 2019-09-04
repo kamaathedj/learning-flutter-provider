@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:playground/src/pages/counter_page.dart';
+import 'package:provider/provider.dart';
+import 'package:playground/src/stores/counter_store.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(
+  MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        builder: (_)=>CounterStore(),
+      )
+    ],
+    child:MyApp()
+  ),
+  
+  
+  );
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -13,7 +26,7 @@ class MyApp extends StatelessWidget {
       
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: CounterPage(),
     );
   }
 }

@@ -1,32 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:playground/src/stores/counter_store.dart';
+import 'package:provider/provider.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class CounterPage extends StatelessWidget{
 
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    final counter=Provider.of<CounterStore>(context);
   
     return Scaffold(
       appBar: AppBar(
         
-        title: Text(widget.title),
+        title: Text('counter page'),
       ),
       body: Center(
        
@@ -38,14 +24,23 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             Text(
-              '$_counter',
+              '${counter.count}',
               style: Theme.of(context).textTheme.display1,
             ),
+            Consumer<CounterStore>(
+              builder: (context, counterstore,_) {
+                return FlatButton(
+                  child: Text('decrement'),
+                  onPressed: (){counterstore.decrementInStore();},
+
+                );
+              }
+            )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: (){counter.incrementInStore();},
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
